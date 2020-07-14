@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# #!/bin/bash
 # File: guessinggame.sh
 # Project - The Unix Workbench - Coursera
 
