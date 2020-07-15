@@ -2,28 +2,37 @@
 # File: guessinggame.sh
 # Project - The Unix Workbench - Coursera
 
-files=$(pwd | ls -1al | wc -l)
+number_sanitation=0
 
 function right_guess {
-    if [[ $1 -lt $2 ]]
-    then
-	echo "You entered $input. That's too low! Try again."
-   	echo ""
- elif [[ $1 -gt $2 ]]
-    then
+	local files=$(pwd | ls -1 | wc -l | egrep -o "[0-9]+") 
+
+	if [[ $input -eq $files ]]
+    	then
+	echo "Good job. $input is the right count of files!"
+	echo ""
+	number_sanitation=1
+ 	elif [[ $input -gt $files ]]
+    	then
 	echo "You entered $input. That's too high! Try again."
 	echo ""
-else
-	echo "Whoop whoop. $input is the right count of files!"
+	else
+	echo "You entered $input. That's too low! Try again."
 	echo ""
-    fi
+    	fi
 }
 
-while [[ $files -ne $input ]]
+while [[ $number_sanitation -eq 0 ]]
 do
     read -p "Please guess how many files are in the current directory? " input
-    echo $(right_guess $input $files)
+	if [[ $(echo $input | egrep -x -E "[[:blank:]]*[^0-9]+[[:blank:]]*") ]]
+	then
+		echo "Please type in a number:"
+		read input
+	fi
+	right_guess
 echo ""
 done
 
-echo "---" && ls -1al
+echo "---" && ls -1
+
