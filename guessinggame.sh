@@ -2,7 +2,7 @@
 # File: guessinggame.sh
 # Project - The Unix Workbench - Coursera
 
-files=$(pwd | ls -1 | wc -l)
+files=$(pwd | ls -1al | wc -l)
 
 function right_guess {
     if [[ $1 -lt $2 ]]
@@ -25,3 +25,5 @@ do
     echo $(right_guess $input $files)
 echo ""
 done
+
+echo "---" && ls -1al
