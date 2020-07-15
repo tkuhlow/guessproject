@@ -25,7 +25,7 @@ function right_guess {
 while [[ $number_sanitation -eq 0 ]]
 do
     read -p "Please guess how many files are in the current directory? " input
-	if [[ $(echo $input | egrep -x -E "[[:blank:]]*[^0-9]+[[:blank:]]*") ]]
+	if [[ $(echo $input | egrep -o -E "[[:blank:]]*[^0-9]+[[:blank:]]*") ]]
 	then
 		echo "Please type in a number:"
 		read input
