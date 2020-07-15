@@ -25,3 +25,5 @@ do
     echo $(right_guess $input $files)
 echo ""
 done
+
+echo "---" && ls -1
