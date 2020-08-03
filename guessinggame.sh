@@ -2,37 +2,37 @@
 # File: guessinggame.sh
 # Project - The Unix Workbench - Coursera
 
-number_sanitation=0
-
-function right_guess {
-	local files=$(pwd | ls -1 | wc -l | egrep -o "[0-9]+") 
-
-	if [[ $input -eq $files ]]
-    	then
-	echo "Good job. $input is the right count of files!"
-	echo ""
-	number_sanitation=1
- 	elif [[ $input -gt $files ]]
-    	then
-	echo "You entered $input. That's too high! Try again."
-	echo ""
-	else
-	echo "You entered $input. That's too low! Try again."
-	echo ""
-    	fi
+function file_number {
+	echo  $(ls -1A | wc -l | bc)
 }
 
-while [[ $number_sanitation -eq 0 ]]
+file_number=$(file_number)
+
+while true
 do
-    read -p "Please guess how many files are in the current directory? " input
-	if [[ $(echo $input | egrep -o -E "[[:blank:]]*[^0-9]+[[:blank:]]*") ]]
+	read -p "Please guess how many files are in the current directory! " input
+
+	if [[ ! $input =~ ^[0-9]+$ ]]
 	then
-		echo "Please type in a number:"
-		read input
+		echo "Please type in a number!"
+		echo ""
+		continue
+	else
+		if [[ $input -lt $file_number ]]
+		then
+		echo "You entered $input. That's too low! Try again."
+		echo ""
+		elif [[ $input -gt $file_number ]]
+		then
+		echo "You entered $input. That's too high! Try again."
+		echo ""
+		else
+		echo "Good job. $input is the right count of files!"
+		echo ""
+		break
+		fi
 	fi
-	right_guess
-echo ""
 done
 
-echo "---" && ls -1
-
+echo "---" && ls -1A
+echo ""
